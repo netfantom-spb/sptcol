@@ -4,10 +4,10 @@
 #include <string>
 #include <random>
 
-const std::string chars = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
-const std::string marker = "syc";
+const std::string chars = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+"; // допустимые символы для пароля
+const std::string marker = "syc"; // маркер
 
-// Генерация случайного пароля заданной длины
+// Генерация пароля заданной длины
 std::string generatePassword(int length)
 {
     std::random_device rd;
@@ -23,20 +23,23 @@ std::string generatePassword(int length)
     return marker + password;
 }
 
-
-bool containsOnlyAllowedChars(const std::string& password, const std::string& allowedChars) {
-    for (char ch : password) {
-        if (allowedChars.find(ch) == std::string::npos) {
+// Проверка что строка состоит только из разрешенных символов
+bool containsOnlyAllowedChars(const std::string &password, const std::string &allowedChars)
+{
+    for (char ch : password)
+    {
+        if (allowedChars.find(ch) == std::string::npos)
+        {
             return false; // Если символ не найден в разрешенных символах, возвращаем false
         }
     }
     return true; // Если все символы из пароля найдены в разрешенных, возвращаем true
 }
 
-
-bool isGeneratedByAlgorithm(const std::string &password)
+// Проверка что пароль сгенерирован алгоритмом
+bool isPasswordGeneratedByAlgorithm(const std::string &password)
 {
-    return password.find(marker) == 0 &&  containsOnlyAllowedChars(password, chars);
+    return password.find(marker) == 0 && containsOnlyAllowedChars(password, chars);
 }
 
 int main()
@@ -46,7 +49,7 @@ int main()
 
     std::cout << "Сгенерированный пароль: " << password << std::endl;
 
-    if (isGeneratedByAlgorithm(password))
+    if (isPasswordGeneratedByAlgorithm(password))
     {
         std::cout << "Пароль сгенерирован алгоритмом" << std::endl;
     }
@@ -55,9 +58,10 @@ int main()
         std::cout << "Пароль НЕ сгенерирован алгоритмом" << std::endl;
     }
 
+    // "Испортим" пароль
     std::string wrongPassord = password + "BCA";
-
-    if (isGeneratedByAlgorithm(wrongPassord))
+    std::cout << """Испорченный"" пароль: " << wrongPassord << std::endl;
+    if (isPasswordGeneratedByAlgorithm(wrongPassord))
     {
         std::cout << "Пароль сгенерирован алгоритмом" << std::endl;
     }
