@@ -1,0 +1,1 @@
+g++ -shared -o pi_calculation.so -fPIC pi_calculation.cpp && python3 main.py
